@@ -22,9 +22,8 @@ public class WandController : MonoBehaviour
     {
         if (!grabInteractable)
             grabInteractable = GetComponent<XRGrabInteractable>();
-
-        //grabInteractable.selectExited.AddListener(OnSelectExited);
-
+            SpellManager.Instance.OnSpellChanged += OnSpellChanged;
+        Debug.Log("WandController connected to SpellManager!");
         if (spellTrail)
             spellTrail.enabled = false;
     }
@@ -48,22 +47,6 @@ public class WandController : MonoBehaviour
             if (spellTrail) spellTrail.enabled = false;
         }
     }
-/*
-    private void OnSelectExited(SelectExitEventArgs args)
-    {
-        if (!args.isCanceled)
-        {
-            currentInteractor = args.interactorObject;
-
-            // Snap wand to attach point
-            Transform attach = args.interactorObject.GetAttachTransform(grabInteractable);
-            grabInteractable.attachTransform.position = attach.position;
-            grabInteractable.attachTransform.rotation = attach.rotation;
-
-            // Use the new XRIT method for manual interaction
-            currentInteractor.Select(grabInteractable);
-        }
-    }*/
 
     public void SetSpellSelected(bool active)
     {
