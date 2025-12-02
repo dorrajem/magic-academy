@@ -1,15 +1,31 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class SpellSelectButton : MonoBehaviour
-{
-    public SpellManager spellManager;
-    public WandController wandController;
-    public Spell spell;
 
-    public void SelectSpell()
+{
+    public Canvas spellMenu;
+    public InputActionProperty openMenuButton;
+
+    private bool isOpen = false;
+
+    void Update()
     {
-        spellManager.SetActiveSpell(spell);
-        wandController.SetSpellSelected(true);
+        if (openMenuButton.action.WasPerformedThisFrame())
+        {
+            isOpen = !isOpen;
+            spellMenu.enabled = isOpen;
+        }
     }
+
+public void SelectSpellByIndex(int index)
+{
+    if (index >= 0 && index < SpellManager.Instance.learnedSpells.Count)
+    {
+        Spell spell = SpellManager.Instance.learnedSpells[index];
+        SpellManager.Instance.SetActiveSpell(spell);
+    }
+}
+
 }
